@@ -2,6 +2,8 @@ from abc import ABC
 
 
 class IntegerRange:
+    """Descriptor data validation"""
+
     def __init__(self, min_amount: int, max_amount: int) -> None:
         self.min_amount = min_amount
         self.max_amount = max_amount
@@ -15,7 +17,7 @@ class IntegerRange:
 
     def __set__(self, instance: object, value: int) -> None:
         if not self.min_amount <= value <= self.max_amount:
-            raise ValueError(f"must be in range:"       # noqa
+            raise ValueError(f"{value} must be in range:"       # noqa
                              f" {self.min_amount} - {self.max_amount}")
         setattr(instance, self.protected_name, value)
 
@@ -62,6 +64,6 @@ class Slide:
     def can_access(self, visitor: Visitor) -> bool:
         try:
             self.limitation_class(visitor.age, visitor.weight, visitor.height)
-            return True
         except ValueError:
             return False
+        return True
